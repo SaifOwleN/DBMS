@@ -8,6 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+        montserrat: ["Montserrat", "sans-serif"],
+        raleway: ["Raleway", "sans-serif"],
+        karla: ["Karla", "sans-serif"],
+        notable: ["Notable", "sans-serif"],
+      },
+
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -17,7 +26,26 @@ const config: Config = {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["corporate", "dark", "light", "lofi"],
+    themes: [
+      "corporate",
+      "dark",
+      "light",
+      "lofi",
+      {
+        lofi: {
+          ...require("daisyui/src/theming/themes")["lofi"],
+          primary: "#155e75",
+
+          secondary: "#0f766e",
+
+          accent: "#9f1239",
+
+          neutral: "#1c1917",
+
+          "base-100": "#f3f4f6",
+        },
+      },
+    ],
   },
 };
 export default config;

@@ -18,7 +18,6 @@ const Employees = () => {
     const func = async () => {
       const employees = await services.getEmployees();
       setEmp(employees);
-      console.log(emp);
     };
     func();
   }, []);

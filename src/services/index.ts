@@ -11,9 +11,14 @@ const getEmployees = async () => {
   return emp.data;
 };
 
+const getSchema = async () => {
+  const emp = await axios.get(`${baseurl}/schema`);
+  return emp.data;
+};
+
 const login = async (loginCreds: LoginCreds) => {
   const emp = await axios.post(`${baseurl}/login`, loginCreds);
   return emp.data;
 };
 
-export default { getEmployees, login };
+export default { getEmployees, login, getSchema };
