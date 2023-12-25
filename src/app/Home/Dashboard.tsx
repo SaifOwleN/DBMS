@@ -3,11 +3,11 @@ import Link from "next/link";
 
 const Dashboard = () => {
   const reta = () => {
-    const arr = ["Cars", "Employees", "Employeehours", "Overtimes", "Trips"];
+    const arr = ["Cars", "Employees", "EmployeeHours", "Overtime", "Trips"];
     return arr.map((xdd) => {
       return (
         <div key={xdd} className="card shadow-xl w-96">
-          <div className="card-body ">{xdd}</div>
+          <div className="card-body">{xdd}</div>
           <div className="card-actions justify-around my-4">
             <Link href={`Home/Schema?table=${xdd}`} className="btn btn-primary">
               Schema

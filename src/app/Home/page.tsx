@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Employees from "./employee";
 import Dashboard from "./Dashboard";
 import { useRouter } from "next/navigation";
+import Auth from "@/components/Auth";
 
 const HomePage = () => {
   const [user, setUser] = useState({});
@@ -24,7 +25,11 @@ const HomePage = () => {
     }
   };
 
-  return <div>{checkUser()}</div>;
+  return (
+    <Auth>
+      <div>{checkUser()}</div>
+    </Auth>
+  );
 };
 
 export default HomePage;

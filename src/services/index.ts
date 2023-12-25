@@ -21,4 +21,4 @@ const login = async (loginCreds: LoginCreds) => {
   return emp.data;
 };
 
-export default { getEmployees, login, getSchema };
+export default { getEmployees, login, getSchema, baseurl };
