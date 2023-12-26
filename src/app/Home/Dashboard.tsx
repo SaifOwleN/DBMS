@@ -2,8 +2,16 @@ import { Raleway } from "next/font/google";
 import Link from "next/link";
 
 const Dashboard = () => {
-  const reta = () => {
-    const arr = ["Cars", "Employees", "EmployeeHours", "Overtime", "Trips"];
+  const Tables = () => {
+    const arr = [
+      "Cars",
+      "Employees",
+      "EmployeeHours",
+      "Overtime",
+      "Trips",
+      "Fuel",
+    ];
+
     return arr.map((xdd) => {
       return (
         <div key={xdd} className="card shadow-xl w-96">
@@ -19,6 +27,13 @@ const Dashboard = () => {
             >
               Entries
             </Link>
+            <Link
+              href={`Home/NewEntry?table=${xdd}`}
+              passHref
+              className="btn btn-accent "
+            >
+              Add
+            </Link>
           </div>
         </div>
       );
@@ -26,7 +41,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="m-10 flex gap-20 font-raleway flex-wrap">{reta()}</div>
+    <div className="m-10 flex gap-20 font-raleway flex-wrap">{Tables()}</div>
   );
 };
 export default Dashboard;

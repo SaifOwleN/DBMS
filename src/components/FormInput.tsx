@@ -1,4 +1,4 @@
-const LoginInput = ({
+const FormInput = ({
   values,
   handleBlur,
   name,
@@ -8,9 +8,10 @@ const LoginInput = ({
   errors,
   touched,
 }) => {
+
   return (
     <>
-      <label className="label">{label}</label>
+      <label className="label">{label}: </label>
       <input
         id={name}
         onBlur={handleBlur}
@@ -26,4 +27,4 @@ const LoginInput = ({
   );
 };
 
-export default LoginInput;
+export default FormInput;

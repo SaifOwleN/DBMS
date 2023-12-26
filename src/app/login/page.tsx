@@ -4,8 +4,8 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { basicSchema } from "@/components/schemas";
 import services from "@/services";
-import LoginInput from "@/components/input";
 import { useRouter } from "next/navigation";
+import FormInput from "@/components/FormInput";
 
 const SignInPage = () => {
   const [submissionError, setSubmissionError] = useState<string | null>(null);
@@ -47,7 +47,7 @@ const SignInPage = () => {
         <h3 className="text-red-500 font-semibold text-xl text-wrap">
           {submissionError}
         </h3>
-        <LoginInput
+        <FormInput
           errors={errors}
           type="text"
           handleBlur={handleBlur}
@@ -57,7 +57,7 @@ const SignInPage = () => {
           touched={touched}
           values={values}
         />
-        <LoginInput
+        <FormInput
           errors={errors}
           type="password"
           handleBlur={handleBlur}
@@ -67,7 +67,7 @@ const SignInPage = () => {
           touched={touched}
           values={values}
         />
-        <LoginInput
+        <FormInput
           errors={errors}
           type="password"
           handleBlur={handleBlur}
