@@ -1,30 +1,29 @@
 const FormInput = ({
-  values,
-  handleBlur,
-  name,
-  type,
-  label,
-  handleChange,
-  errors,
-  touched,
+	values,
+	handleBlur,
+	name,
+	type,
+	label,
+	handleChange,
+	errors,
+	touched,
 }) => {
-
-  return (
-    <>
-      <label className="label">{label}: </label>
-      <input
-        id={name}
-        onBlur={handleBlur}
-        value={values[name]}
-        onChange={handleChange}
-        className={`input input-primary ${
-          errors[name] && touched[name] ? "input-error" : "input-primary"
-        }`}
-        type={type}
-      />
-      <br />
-    </>
-  );
+	return (
+		<div>
+			<label className="label">{label}: </label>
+			<input
+				id={name}
+				onBlur={handleBlur}
+				value={values[name]}
+				onChange={handleChange}
+				className={`input input-primary w-full ${
+					errors[name] && touched[name] ? "input-error" : "input-primary"
+				}`}
+				type={type}
+			/>
+			<br />
+		</div>
+	);
 };
 
 export default FormInput;

@@ -1,24 +1,41 @@
+import { log } from "console";
+import axiosInstance from "@/utils/axios";
 import axios from "axios";
-const baseurl = "http://localhost:3200/api";
 
 interface LoginCreds {
-  username: string;
-  password: string;
+	username: string;
+	password: string;
 }
 
-const getEmployees = async () => {
-  const emp = await axios.get(`${baseurl}/employees`);
-  return emp.data;
+const getEmployees = async (token: string) => {
+	const emp = await axiosInstance.get("/employees");
+	return emp.data;
+};
+
+const getEntries = async (router: string) => {
+	const { data } = await axiosInstance.get(`/${router.toLowerCase()}`);
+	return data;
 };
 
 const getSchema = async () => {
-  const emp = await axios.get(`${baseurl}/schema`);
-  return emp.data;
+	const emp = await axiosInstance.get("/schema");
+	return emp.data;
+};
+
+const getOneSchema = async (table: string) => {
+	const emp = await axiosInstance.get(`/${table}/schema`);
+	return emp.data;
 };
 
 const login = async (loginCreds: LoginCreds) => {
-  const emp = await axios.post(`${baseurl}/login`, loginCreds);
-  return emp.data;
+	const emp = await axios.post("http://localhost:3200/api/login", loginCreds);
+	return emp.data;
 };
 
-export default { getEmployees, login, getSchema, baseurl };
+export default {
+	getEmployees,
+	login,
+	getSchema,
+	getEntries,
+	getOneSchema,
+};
