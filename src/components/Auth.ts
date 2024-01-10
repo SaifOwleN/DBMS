@@ -1,21 +1,28 @@
+import services from "@/services";
+import { useRouter } from "next/navigation";
 // components/Auth.js
 import { ReactNode, useEffect } from "react";
-import { useRouter } from "next/navigation";
 
 const Auth = ({ children }: { children: ReactNode }) => {
-  const router = useRouter();
+	const router = useRouter();
 
-  useEffect(() => {
-    // Check if the user is not signed in
-    const isUserSignedIn = localStorage.getItem("SignedUser");
+	useEffect(() => {
+		const user = localStorage.getItem("SignedUser");
+		if (!user) {
+			router.push("/login");
+		}
+		(async () => {
+			try {
+				const { token } = JSON.parse(user as string);
+				const xdd = await services.checkAuth(token);
+			} catch (err) {
+				await localStorage.removeItem("SignedUser");
+				router.push("/login");
+			}
+		})();
+	}, [router]);
 
-    // Redirect to login page if not signed in
-    if (!isUserSignedIn) {
-      router.push("/login"); // Replace with your login page route
-    }
-  }, []);
-
-  return children;
+	return children;
 };
 
 export default Auth;

@@ -2,3 +2,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.xd {
+  box-shadow: 15px 15px #F8D046;
+}

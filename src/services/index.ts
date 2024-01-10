@@ -32,10 +32,18 @@ const login = async (loginCreds: LoginCreds) => {
 	return emp.data;
 };
 
+const checkAuth = async (token: string) => {
+	const auth = await axios.post("http://localhost:3200/api/login/auth", {
+		token,
+	});
+	return auth.data;
+};
+
 export default {
 	getEmployees,
 	login,
 	getSchema,
 	getEntries,
 	getOneSchema,
+	checkAuth,
 };

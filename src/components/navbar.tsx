@@ -18,6 +18,7 @@ const NavBar = () => {
 
 	const HandleSignOut = () => {
 		localStorage.removeItem("SignedUser");
+		setUser(null);
 		router.push("/login");
 	};
 
@@ -47,7 +48,9 @@ const NavBar = () => {
 
 	return (
 		<div className="navbar bg-base-100 shadow shadow-black flex justify-between">
-			<h1 className="text-2xl">Dashboard</h1>
+			<h1 className="text-2xl ml-6">
+				<a href="/">Dashboard</a>
+			</h1>
 			<div className="flex gap-4">{ifLogged()}</div>
 		</div>
 	);

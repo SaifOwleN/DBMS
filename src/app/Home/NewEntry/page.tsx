@@ -39,9 +39,9 @@ const NewEntry = () => {
 			try {
 				const data = await services.getOneSchema(table as string);
 				const initialVals = {};
-				data.forEach((field: { name: string }) => {
+				for (const field of data) {
 					initialVals[field.name] = "";
-				});
+				}
 				console.log("initialVals", initialVals);
 				setInitialValues(initialVals);
 				setSchemaData(data);
@@ -69,13 +69,15 @@ const NewEntry = () => {
 	};
 
 	return (
-		<div className="flex justify-center ">
-			<form onSubmit={handleSubmit}>
-				{Inputs()}
-				<button type="submit" className="btn btn-primary mt-4">
-					Submit
-				</button>
-			</form>
+		<div className="flex justify-center items-center h-full">
+			<div className="flex flex-col justify-end">
+				<form onSubmit={handleSubmit}>
+					{Inputs()}
+					<button type="submit" className="btn btn-primary mt-4 ">
+						Submit
+					</button>
+				</form>
+			</div>
 		</div>
 	);
 };

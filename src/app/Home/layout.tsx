@@ -11,7 +11,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 	// 		console.log("token", token);
 	// 	})();
 	// }, []);
-	return <div>{children}</div>;
+	return <div className="h-full">{children}</div>;
 };
 
 export default Layout;
