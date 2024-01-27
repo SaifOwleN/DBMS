@@ -1,17 +1,18 @@
 "use client";
 import axiosInstance from "@/utils/axios";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 import React, { SyntheticEvent, useState } from "react";
 
 const Bulk = () => {
 	const [file, setFile] = useState<File | null>(null);
-
+	const route = useSearchParams().get("table");
 	const uploadFile = (e: SyntheticEvent) => {
 		e.preventDefault();
 		(async () => {
 			const formData = new FormData();
 			formData.append("file", file as File);
-			await axiosInstance.post("/xdd", formData);
+			await axiosInstance.post(`/${route}/bulk`, formData);
 		})();
 	};
 

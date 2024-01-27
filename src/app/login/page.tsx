@@ -40,7 +40,7 @@ const SignInPage = () => {
 		});
 
 	return (
-		<div className="flex justify-center items-center h-screen">
+		<div className="flex justify-center items-center h-full">
 			<form
 				onSubmit={handleSubmit}
 				className="flex flex-col gap-4 border-black border p-10 w-[384px]"

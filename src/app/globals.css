@@ -3,6 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  min-width: 0;
+}
+
 .xd {
   box-shadow: 15px 15px #F8D046;
 }
+

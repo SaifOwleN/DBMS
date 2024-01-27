@@ -4,25 +4,27 @@ import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 
 const Auth = ({ children }: { children: ReactNode }) => {
-	const router = useRouter();
+  const router = useRouter();
 
-	useEffect(() => {
-		const user = localStorage.getItem("SignedUser");
-		if (!user) {
-			router.push("/login");
-		}
-		(async () => {
-			try {
-				const { token } = JSON.parse(user as string);
-				const xdd = await services.checkAuth(token);
-			} catch (err) {
-				await localStorage.removeItem("SignedUser");
-				router.push("/login");
-			}
-		})();
-	}, [router]);
+  useEffect(() => {
+    const user = localStorage.getItem("SignedUser");
+    if (!user) {
+      router.push("/login");
+    }
+    (async () => {
+      try {
+        console.log("xdddddddd");
 
-	return children;
+        const { token } = JSON.parse(user as string);
+        const xdd = await services.checkAuth(token);
+      } catch (err) {
+        await localStorage.removeItem("SignedUser");
+        router.push("/login");
+      }
+    })();
+  }, [router]);
+
+  return children;
 };
 
 export default Auth;

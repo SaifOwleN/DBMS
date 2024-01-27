@@ -49,7 +49,7 @@ const Schema = () => {
 	return (
 		<>
 			<div
-				className={`  my-10 p-10 pt-5  ${
+				className={`my-10 p-10 pt-5  ${
 					!schema || schema.length !== 0 ? "block" : "hidden"
 				}`}
 			>

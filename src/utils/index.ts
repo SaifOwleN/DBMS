@@ -1,50 +1,50 @@
 interface Car {
-	regNumber: string;
-	make: string;
-	model: string;
-	totalMiles: number;
-	EmployeeID: number;
+  regNumber: string;
+  make: string;
+  model: string;
+  totalMiles: number;
+  EmployeeID: number;
 }
 
 interface Employee {
-	EmployeeID: number;
-	EmployeeName: string;
-	Age: number;
-	Position: string;
-	Address: string | null;
-	ISFullTime: boolean;
+  EmployeeID: number | string;
+  EmployeeName: string;
+  Age: number;
+  Position: string;
+  Address: string | null;
+  ISFullTime: boolean;
 }
 
 export interface TableDefinition {
-	name: string;
-	type: string;
-	allowNull: boolean;
+  name: string;
+  type: string;
+  allowNull: boolean;
 }
 export interface Tables {
-	[key: string]: TableDefinition[];
-	Cars: TableDefinition[];
-	Employees: TableDefinition[];
-	EmployeeHours: TableDefinition[];
-	Fuel: TableDefinition[];
-	Overtime: TableDefinition[];
-	Trips: TableDefinition[];
+  [key: string]: TableDefinition[];
+  Cars: TableDefinition[];
+  Employees: TableDefinition[];
+  EmployeeHours: TableDefinition[];
+  Fuel: TableDefinition[];
+  Overtime: TableDefinition[];
+  Trips: TableDefinition[];
 }
 
 export interface User {
-	name: string;
-	username: string;
-	token: string;
-	userID: string;
+  name: string;
+  username: string;
+  token: string;
+  userID: string;
 }
 
 export const getUserFromLocalStorage = (): User | null => {
-	try {
-		const user = JSON.parse(localStorage.getItem("SignedUser") as string);
-		return user;
-	} catch (error) {
-		console.error("Error parsing user data:", error);
-		return null;
-	}
+  try {
+    const user = JSON.parse(localStorage.getItem("SignedUser") as string);
+    return user;
+  } catch (error) {
+    console.error("Error parsing user data:", error);
+    return null;
+  }
 };
 
-export type Data = Employee | Car;
+export type Data = Employee;
