@@ -4,9 +4,11 @@ import { Data } from "@/utils";
 import { AxiosError } from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { BiArrowToBottom, BiArrowToTop, BiSolidError } from "react-icons/bi";
-import { FaArrowDown } from "react-icons/fa";
-import { FaArrowUp } from "react-icons/fa6";
+import { BiSolidError } from "react-icons/bi";
+import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
+import { RxDotFilled } from "react-icons/rx";
+import Header from "./Header";
+import { GoTrash } from "react-icons/go";
 
 interface SortT {
   key: string;
@@ -17,7 +19,7 @@ const Entries = () => {
   const route = useSearchParams().get("table");
   const [data, setData] = useState<Data[]>([]);
   const router = useRouter();
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | undefined>();
   const [search, setSearch] = useState("");
   const [sortValue, setSortValue] = useState<SortT | undefined>();
 
@@ -31,10 +33,10 @@ const Entries = () => {
         console.log(err);
         if (err instanceof AxiosError) {
           if (err.response?.status === 401) {
-            setError(true);
+            setError("session expired. redirecting to login page");
             localStorage.removeItem("SignedUser");
             setTimeout(() => {
-              setError(false);
+              setError(undefined);
               router.push("/login");
             }, 5000);
           }
@@ -43,15 +45,6 @@ const Entries = () => {
     };
     getSchema();
   }, [route]);
-
-  const tableHead = () => {
-    if (!data || !data[0]) {
-      return null;
-    }
-    return Object.entries(data ? data[0] : {}).map(([name, _]) => {
-      return <th key={name}>{name}</th>;
-    });
-  };
 
   const changeSort = (key: string) => {
     if (sortValue) {
@@ -66,55 +59,58 @@ const Entries = () => {
       setSortValue({ key, order: true });
     }
   };
-
-  const Filters = () => {
-    return (
-      <div className="flex justify-evenly mb-4">
-        <input
-          className="input input-primary w-7/12 rounded-full"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search"
-        />
-        <div className="Filters dropdown">
-          <button role="button" tabIndex={0} className="btn">
-            Sort By
-          </button>
-          <ul
-            tabIndex={0}
-            className="dropdown-content menu p-2 z-[1] shadow bg-base-100 rounded-box w-52"
-          >
-            {data.length !== 0
-              ? Object.entries(data[0]).map(([key, value]) => {
-                  if (typeof value === "number") {
-                    return (
-                      <li>
-                        <a
-                          key={key}
-                          onClick={() => changeSort(key)}
-                          className="flex justify-between"
-                        >
-                          {key}
-                          {sortValue?.key == key ? (
-                            sortValue.order ? (
-                              <FaArrowDown />
-                            ) : (
-                              <FaArrowUp />
-                            )
-                          ) : null}
-                        </a>
-                      </li>
-                    );
-                  }
-                  return null;
-                })
-              : null}
-          </ul>
-        </div>
-      </div>
-    );
+  const tableHead = () => {
+    if (!data || !data[0]) {
+      return null;
+    }
+    return Object.entries(data ? data[0] : {}).map(([key, xdd]) => {
+      if (typeof xdd == "number") {
+        return (
+          <th>
+            <label
+              onClick={() => changeSort(key)}
+              key={key}
+              style={{ userSelect: "none" }}
+              className="inline-flex items-center cursor-pointer"
+            >
+              {key}
+              {sortValue?.key == key ? (
+                sortValue.order ? (
+                  <MdKeyboardArrowDown />
+                ) : (
+                  <MdKeyboardArrowUp />
+                )
+              ) : (
+                <RxDotFilled />
+              )}
+            </label>
+          </th>
+        );
+      }
+      return (
+        <th key={key}>
+          <label style={{ userSelect: "none" }}>{key}</label>
+        </th>
+      );
+    });
   };
 
+  const deleteEntry = async (id: number | string) => {
+    try {
+      await services.deleteEntry(route as string, id);
+      router.refresh();
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        console.log(err);
+        setError(
+          "An Error Has Occured when deleting the entry. Please try again later.",
+        );
+        setTimeout(() => {
+          setError(undefined);
+        }, 5000);
+      }
+    }
+  };
   const showData = () => {
     return data
       ?.filter((attr) => {
@@ -140,22 +136,63 @@ const Entries = () => {
         <tr key={attr.EmployeeID}>
           {Object.entries(attr).map(([key, value]) => (
             <td key={key}>
-              {typeof value === "boolean" ? String(value) : value}
+              {typeof value === "boolean" ? (
+                value === true ? (
+                  <span className="text-blue-600">True</span>
+                ) : (
+                  <span className="text-red-600">False</span>
+                )
+              ) : (
+                value
+              )}
             </td>
           ))}
+          <button
+            className="inline-flex py-3 px-4 text-lg"
+            onClick={() => {
+              document.getElementById("modal_delete").showModal();
+            }}
+          >
+            <GoTrash />
+          </button>
+          <dialog id="modal_delete" className="modal">
+            <div className="modal-box">
+              <h3 className="font-bold text-lg">Carefull</h3>
+              <p className="py-4">
+                You are about to delete{" "}
+                {route?.endsWith("s")
+                  ? route?.substring(0, route.length - 1)
+                  : route}
+                with {attr.EmployeeID}. Are You Sure?
+              </p>
+              <div className="flex justify-end py-2">
+                <button
+                  className="btn btn-primary"
+                  onClick={() => deleteEntry(attr.EmployeeID)}
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+            <form method="dialog" className="modal-backdrop">
+              <button className="cursor-default" />
+            </form>
+          </dialog>
         </tr>
       ));
   };
 
   return (
     <>
-      <div
-        className={`my-10 p-10 pt-5 ${
-          !data || data.length !== 0 ? "block" : "hidden"
-        }`}
-      >
-        {Filters()}
-        <table className="table">
+      <div className={`p-10 w-full`}>
+        <div className="mb-8 ml-2">
+          <Header search={search} setSearch={setSearch} route={route} />
+        </div>
+        <table
+          className={`table table-zebra ${
+            !data || data.length !== 0 ? "block" : "hidden"
+          }`}
+        >
           <thead>
             <tr>{tableHead()}</tr>
           </thead>
@@ -169,7 +206,7 @@ const Entries = () => {
             <span className="text-xl">
               <BiSolidError />
             </span>
-            session expired. redirecting to login page
+            {error}
           </div>
         </div>
       }

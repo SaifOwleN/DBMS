@@ -8,6 +8,17 @@
 }
 
 .xd {
-  box-shadow: 15px 15px #F8D046;
+  box-shadow: 15px 15px #f8d046;
 }
 
+.navBtn {
+  width: 180px;
+}
+
+.active {
+  background-color: #fff;
+}
+
+.navSpan {
+  font-size: 1rem;
+}

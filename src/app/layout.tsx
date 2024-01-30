@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="en" data-theme="nord">
+    <html lang="en" data-theme="light">
       <body
-        className={`p-4 flex text-blue-950 flex-col ${inter.className} overflow-auto`}
+        className={`flex flex-row text-blue-950 ${inter.className} h-screen`}
       >
         <NavBar />
         {children}

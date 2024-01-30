@@ -2,19 +2,30 @@
 
 import { User, getUserFromLocalStorage } from "@/utils";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
+import { LuLayoutTemplate } from "react-icons/lu";
+import { MdDashboard, MdHome } from "react-icons/md";
 const NavBar = () => {
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
+  const pathName = usePathname();
+
+  useEffect(
+    function path() {
+      if (pathName.includes("Home")) {
+        document.getElementById("Home")?.classList.add("bg-white");
+      } else if (pathName.includes("Dashboard")) {
+        document.getElementById("Dashboard")?.classList.add("bg-white");
+      }
+    },
+    [pathName],
+  );
+
   useEffect(() => {
-    const xdd = async () => {
-      const user = await getUserFromLocalStorage();
-      setUser(user);
-    };
-    xdd();
-  }, []);
+    const user = getUserFromLocalStorage();
+    setUser(user);
+  }, [pathName]);
 
   const HandleSignOut = () => {
     localStorage.removeItem("SignedUser");
@@ -25,17 +36,18 @@ const NavBar = () => {
   const ifLogged = () => {
     if (user) {
       return (
-        <div className="dropdown dropdown-end">
-          <button type="button" className="btn btn-neutral">
-            {user.name}
-          </button>
-          <ul className="dropdown-content menu w-36 shadow bg-base-100 ">
-            <li>
-              <button type="button" onClick={HandleSignOut}>
-                Sign Out
-              </button>
-            </li>
-          </ul>
+        <div className="flex items-center">
+          <div className="avatar">
+            <div className="rounded-full w-12">
+              <img src="https://shorturl.at/qzEQ2" />
+            </div>
+          </div>
+          <div className="flex flex-col items-center pl-2.5 pt-1">
+            <label className="text-gray-500 text-xs font-normal">
+              Welcome Back
+            </label>
+            <h2 className="text-lg">{user.name}</h2>
+          </div>
         </div>
       );
     }
@@ -47,11 +59,26 @@ const NavBar = () => {
   };
 
   return (
-    <div className="navbar bg-base-100 shadow shadow-black flex justify-between">
-      <h1 className="text-2xl ml-6">
-        <a href="/Home">Dashboard</a>
-      </h1>
-      <div className="flex gap-4">{ifLogged()}</div>
+    <div className="flex-shrink-0 flex-grow-0 navbar w-56 flex flex-col h-full items-start p-5 bg-gray-100">
+      <div className="flex gap-4 mb-12">{ifLogged()}</div>
+      <div className="flex flex-col gap-4 text-gray-500 font-raleway">
+        <Link
+          id="Home"
+          className="Home text-2xl rounded-lg p-2 flex items-center gap-2 navBtn"
+          href={"/Home"}
+        >
+          <MdHome /> <span className="navSpan">Home</span>
+        </Link>
+        <button
+          id="Dashboard"
+          className="text-2xl rounded-lg p-2 flex items-center gap-2 navBtn"
+        >
+          <MdDashboard /> <span className="navSpan">Data</span>
+        </button>
+        <button className="text-2xl rounded-lg p-2 flex items-center gap-2 navBtn">
+          <LuLayoutTemplate /> <span className="navSpan">Schema</span>
+        </button>
+      </div>
     </div>
   );
 };
