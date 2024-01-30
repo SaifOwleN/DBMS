@@ -17,6 +17,11 @@ const getEntries = async (router: string) => {
   return data;
 };
 
+const getStats = async () => {
+  const { data } = await axiosInstance.get(`/trips/today`);
+  return data;
+};
+
 const deleteEntry = async (router: string, id: number | string) => {
   const { data } = await axiosInstance.delete(`/${router.toLowerCase()}/${id}`);
   return data;
@@ -52,4 +57,5 @@ export default {
   getOneSchema,
   checkAuth,
   deleteEntry,
+  getStats,
 };

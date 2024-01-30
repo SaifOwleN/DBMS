@@ -33,6 +33,7 @@ const config: Config = {
       "lofi",
       "nord",
       "black",
+      "emerald",
       {
         nord: {
           ...require("daisyui/src/theming/themes").nord,
