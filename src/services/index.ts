@@ -33,7 +33,7 @@ const getSchema = async () => {
 };
 
 const getOneSchema = async (table: string) => {
-  const emp = await axiosInstance.get(`/${table}/schema`);
+  const emp = await axiosInstance.get(`/${table.toLowerCase()}/schema`);
   return emp.data;
 };
 

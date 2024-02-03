@@ -6,6 +6,20 @@ interface Car {
   EmployeeID: number;
 }
 
+export interface SortT {
+  key: string;
+  order: boolean;
+}
+
+export interface Schema {
+  EmployeeID: number;
+  EmployeeName: string;
+  Age: number;
+  Position: string;
+  Address?: string; // Address is optional
+  ISFullTime: boolean;
+}
+
 interface Employee {
   EmployeeID: number | string;
   EmployeeName: string;

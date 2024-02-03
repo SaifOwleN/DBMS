@@ -47,7 +47,10 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="m-10 flex gap-20 font-raleway flex-wrap">{Tables()}</div>
+    <div className="m-10">
+      <h1 className="font-bold text-2xl ">Data Entries</h1>
+      <div className="my-10 flex gap-10 font-raleway flex-wrap">{Tables()}</div>
+    </div>
   );
 };
 export default Dashboard;

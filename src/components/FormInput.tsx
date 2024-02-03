@@ -21,6 +21,9 @@ const FormInput = ({
         }`}
         type={type}
       />
+      {touched[name] && errors[name] ? (
+        <label className="text-red-600 text-xs ml-2">{errors[name]}</label>
+      ) : null}
     </div>
   );
 };

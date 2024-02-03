@@ -1,6 +1,6 @@
 "use client";
 import services from "@/services";
-import { Data } from "@/utils";
+import { Data, SortT } from "@/utils";
 import { AxiosError } from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -9,22 +9,20 @@ import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { RxDotFilled } from "react-icons/rx";
 import Header from "./Header";
 import { GoTrash } from "react-icons/go";
-
-interface SortT {
-  key: string;
-  order: boolean;
-}
+import { Schema } from "yup";
 
 const Entries = () => {
   const route = useSearchParams().get("table");
   const [data, setData] = useState<Data[]>([]);
+
+  const [schema, setSchema] = useState<Schema[]>([]);
   const router = useRouter();
   const [error, setError] = useState<string | undefined>();
   const [search, setSearch] = useState("");
   const [sortValue, setSortValue] = useState<SortT | undefined>();
 
   useEffect(() => {
-    const getSchema = async () => {
+    const getData = async () => {
       try {
         const data = await services.getEntries(route as string);
         console.log("data", data);
@@ -43,6 +41,12 @@ const Entries = () => {
         }
       }
     };
+    const getSchema = async () => {
+      const data = await services.getOneSchema(route as string);
+      setSchema(data);
+      console.log("data", data);
+    };
+    getData();
     getSchema();
   }, [route]);
 
@@ -63,33 +67,37 @@ const Entries = () => {
     if (!data || !data[0]) {
       return null;
     }
-    return Object.entries(data ? data[0] : {}).map(([key, xdd]) => {
+    return Object.entries(data ? data[0] : {}).map(([key, xdd], index) => {
       if (typeof xdd == "number") {
         return (
           <th>
-            <label
-              onClick={() => changeSort(key)}
-              key={key}
-              style={{ userSelect: "none" }}
-              className="inline-flex items-center cursor-pointer"
-            >
-              {key}
-              {sortValue?.key == key ? (
-                sortValue.order ? (
-                  <MdKeyboardArrowDown />
+            <div className="tooltip" data-tip={schema[index]?.type}>
+              <label
+                onClick={() => changeSort(key)}
+                key={key}
+                style={{ userSelect: "none" }}
+                className="inline-flex items-center cursor-pointer"
+              >
+                {key}
+                {sortValue?.key == key ? (
+                  sortValue.order ? (
+                    <MdKeyboardArrowDown />
+                  ) : (
+                    <MdKeyboardArrowUp />
+                  )
                 ) : (
-                  <MdKeyboardArrowUp />
-                )
-              ) : (
-                <RxDotFilled />
-              )}
-            </label>
+                  <RxDotFilled />
+                )}
+              </label>
+            </div>
           </th>
         );
       }
       return (
         <th key={key}>
-          <label style={{ userSelect: "none" }}>{key}</label>
+          <div className="tooltip" data-tip={schema[index]?.type}>
+            <label style={{ userSelect: "none" }}>{key}</label>
+          </div>
         </th>
       );
     });
@@ -134,19 +142,21 @@ const Entries = () => {
       })
       .map((attr) => (
         <tr key={attr.EmployeeID}>
-          {Object.entries(attr).map(([key, value]) => (
-            <td key={key}>
-              {typeof value === "boolean" ? (
-                value === true ? (
-                  <span className="text-blue-600">True</span>
+          {Object.entries(attr).map(([key, value]) => {
+            return (
+              <td key={key}>
+                {typeof value === "boolean" ? (
+                  value === true ? (
+                    <span className="text-blue-600">True</span>
+                  ) : (
+                    <span className="text-red-600">False</span>
+                  )
                 ) : (
-                  <span className="text-red-600">False</span>
-                )
-              ) : (
-                value
-              )}
-            </td>
-          ))}
+                  value
+                )}
+              </td>
+            );
+          })}
           <button
             className="inline-flex py-3 px-4 text-lg"
             onClick={() => {
