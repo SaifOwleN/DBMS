@@ -4,12 +4,13 @@ import { generateYupSchema } from "@/components/schemas";
 import services from "@/services";
 import axiosInstance from "@/utils/axios";
 import { useFormik } from "formik";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Input } from "postcss";
 import { useEffect, useState } from "react";
 
 const NewEntry = () => {
   const table = useSearchParams().get("table");
+  const router = useRouter();
   const [schemaData, setSchemaData] = useState(null);
   const [initialValues, setInitialValues] = useState({});
   const [submissionError, setSubmissionError] = useState<string | null>(null);
@@ -24,6 +25,7 @@ const NewEntry = () => {
             `http://localhost:3200/api/${table}`,
             values,
           );
+          router.refresh();
           console.log("user", user);
         } catch (err) {
           console.log("err", err);
