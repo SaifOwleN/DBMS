@@ -16,7 +16,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body
         className={`flex flex-row text-blue-950 ${inter.className} h-screen`}
       >
-        <NavBar />
         {children}
       </body>
     </html>

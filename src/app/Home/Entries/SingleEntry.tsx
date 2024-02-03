@@ -5,6 +5,7 @@ import services from "@/services";
 import axiosInstance from "@/utils/axios";
 import { useFormik } from "formik";
 import { useSearchParams } from "next/navigation";
+import { Input } from "postcss";
 import { useEffect, useState } from "react";
 
 const NewEntry = () => {
@@ -68,10 +69,10 @@ const NewEntry = () => {
   };
 
   return (
-    <dialog className="modal" id="Modal_AddSingle">
-      <div className="flex flex-col justify-end modal-box">
-        <h1 className="text-xl  font-bold py-2">Add an Entry</h1>
-        <form onSubmit={handleSubmit}>
+    <dialog className="modal overflow-y-auto" id="Modal_AddSingle">
+      <div className="flex flex-col justify-end modal-box max-h-max m-auto">
+        <h1 className="text-xl font-bold py-2">Add an Entry</h1>
+        <form onSubmit={handleSubmit} className="flex flex-col flex-wrap">
           {Inputs()}
           <button type="submit" className="btn btn-primary mt-4 ">
             Submit

@@ -7,7 +7,7 @@ interface LoginCreds {
   password: string;
 }
 
-const getEmployees = async (token: string) => {
+const getEmployees = async () => {
   const emp = await axiosInstance.get("/employees");
   return emp.data;
 };
