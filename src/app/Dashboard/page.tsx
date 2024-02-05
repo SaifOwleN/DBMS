@@ -17,16 +17,20 @@ const Dashboard = () => {
       <div className="flex gap-4">
         <div className="stats  bg-secondary text-secondary-content shadow">
           <div className="stat">
-            <div className="stat-title">Total Page Views</div>
+            <div className="stat-title text-gray-300">Total Page Views</div>
             <div className="stat-value">89,400</div>
-            <div className="stat-desc">21% more than last month</div>
+            <div className="stat-desc text-gray-300">
+              21% more than last month
+            </div>
           </div>
         </div>
         <div className="stats bg-primary text-primary-content shadow">
           <div className="stat">
-            <div className="stat-title">Total Page Views</div>
+            <div className="stat-title text-gray-300">Total Page Views</div>
             <div className="stat-value">89,400</div>
-            <div className="stat-desc">21% more than last month</div>
+            <div className="stat-desc text-gray-300">
+              21% more than last month
+            </div>
           </div>
         </div>
         <div className="stats bg-neutral text-neutral-content shadow">

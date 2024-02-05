@@ -178,7 +178,15 @@ const Entries = () => {
               <div className="flex justify-end py-2">
                 <button
                   className="btn btn-primary"
-                  onClick={() => deleteEntry(attr.EmployeeID)}
+                  onClick={() =>
+                    deleteEntry(
+                      route === "Cars"
+                        ? attr.regNumber
+                        : route === "Employees"
+                          ? attr.EmployeeID
+                          : attr.id,
+                    )
+                  }
                 >
                   Yes
                 </button>

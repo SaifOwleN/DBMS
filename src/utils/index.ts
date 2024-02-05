@@ -16,12 +16,14 @@ export interface Schema {
   EmployeeName: string;
   Age: number;
   Position: string;
-  Address?: string; // Address is optional
+  Address?: string;
   ISFullTime: boolean;
 }
 
 interface Employee {
   EmployeeID: number | string;
+  id: number | string;
+  regNumber: number | string;
   EmployeeName: string;
   Age: number;
   Position: string;
