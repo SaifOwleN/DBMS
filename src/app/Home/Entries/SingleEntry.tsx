@@ -3,10 +3,11 @@ import FormInput from "@/components/FormInput";
 import { generateYupSchema } from "@/components/schemas";
 import services from "@/services";
 import axiosInstance from "@/utils/axios";
+import { AxiosError } from "axios";
 import { useFormik } from "formik";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Input } from "postcss";
 import { useEffect, useState } from "react";
+import { MdOutlineErrorOutline } from "react-icons/md";
 
 const NewEntry = () => {
   const table = useSearchParams().get("table");
@@ -21,17 +22,20 @@ const NewEntry = () => {
       validationSchema: generateYupSchema(schemaData),
       onSubmit: async (values) => {
         try {
-          const user = await axiosInstance.post(
+          await axiosInstance.post(
             `http://localhost:3200/api/${table}`,
             values,
           );
-          router.refresh();
-          console.log("user", user);
+          window.location.reload();
         } catch (err) {
-          console.log("err", err);
-          setSubmissionError(
-            "Failed to sign in. Please check your credentials.",
-          );
+          if (err instanceof AxiosError) {
+            if (err.response?.status === 400) {
+              setSubmissionError("An Entry with the same primary key exists");
+              setTimeout(() => {
+                setSubmissionError(null);
+              }, 5000);
+            }
+          }
         }
       },
     });
@@ -84,6 +88,14 @@ const NewEntry = () => {
       <form method="dialog" className="modal-backdrop">
         <button className="cursor-default" />
       </form>
+      <div className={`toast ${submissionError ? "block" : "hidden"}`}>
+        <div className="alert alert-error">
+          <span className="text-xl">
+            <MdOutlineErrorOutline />
+          </span>
+          {submissionError}
+        </div>
+      </div>
     </dialog>
   );
 };

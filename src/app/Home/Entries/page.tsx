@@ -70,7 +70,7 @@ const Entries = () => {
     return Object.entries(data ? data[0] : {}).map(([key, xdd], index) => {
       if (typeof xdd == "number") {
         return (
-          <th>
+          <th key={key}>
             <div className="tooltip" data-tip={schema[index]?.type}>
               <label
                 onClick={() => changeSort(key)}
@@ -95,9 +95,9 @@ const Entries = () => {
       }
       return (
         <th key={key}>
-          <div className="tooltip" data-tip={schema[index]?.type}>
+          <span className="tooltip" data-tip={schema[index]?.type}>
             <label style={{ userSelect: "none" }}>{key}</label>
-          </div>
+          </span>
         </th>
       );
     });
@@ -106,7 +106,7 @@ const Entries = () => {
   const deleteEntry = async (id: number | string) => {
     try {
       await services.deleteEntry(route as string, id);
-      router.refresh();
+      window.location.reload();
     } catch (err) {
       if (err instanceof AxiosError) {
         console.log(err);

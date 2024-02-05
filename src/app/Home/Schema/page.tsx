@@ -15,8 +15,8 @@ const Schema = () => {
   useEffect(() => {
     const getSchema = async () => {
       try {
-        const tablesData: Tables = await services.getSchema();
-        setSchema(tablesData[route as string]);
+        const tablesData = await services.getOneSchema(route as string);
+        setSchema(tablesData);
       } catch (err) {
         if (err instanceof AxiosError) {
           if (err.response?.status === 401) {
@@ -37,9 +37,17 @@ const Schema = () => {
   const showSchema = () => {
     return schema?.map((attr) => (
       <tr key={attr.name}>
-        <td>{attr.name}</td>
+        <td>
+          {attr.name}
+          {attr.primaryKey ? (
+            <span className="ml-2 badge badge-secondary badge-outline">
+              Primary Key
+            </span>
+          ) : null}
+        </td>
         <td>{attr.type}</td>
-        <td>{String(!attr.allowNull)}</td>
+        <td>{String(!attr.required)}</td>
+        <td>{attr.max ?? "Has No Max Value"}</td>
       </tr>
     ));
   };
@@ -47,16 +55,20 @@ const Schema = () => {
   return (
     <>
       <div
-        className={`my-10 p-10 pt-5  ${
+        className={`p-10 w-full ${
           !schema || schema.length !== 0 ? "block" : "hidden"
         }`}
       >
+        <h1 className="ml-2 mb-8 text-3xl text-slate-600 font-bold font-poppins">
+          {route} Schema
+        </h1>
         <table className="table">
           <thead>
-            <tr>
+            <tr style={{ userSelect: "none" }}>
               <th>Column</th>
               <th>Type</th>
               <th>Required</th>
+              <th>Max Value</th>
             </tr>
           </thead>
           <tbody>{showSchema()}</tbody>

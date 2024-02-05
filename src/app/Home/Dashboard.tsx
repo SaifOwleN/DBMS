@@ -13,7 +13,7 @@ const Dashboard = () => {
 
     return arr.map((xdd) => {
       return (
-        <div key={xdd} className="card shadow-xl w-96">
+        <div key={xdd} className="card shadow-md w-96">
           <div className="card-body">{xdd}</div>
           <div className="card-actions justify-around my-4">
             <Link href={`Home/Schema?table=${xdd}`} className="btn btn-primary">
@@ -26,20 +26,6 @@ const Dashboard = () => {
             >
               Entries
             </Link>
-            <Link
-              href={`Home/NewEntry?table=${xdd}`}
-              passHref
-              className="btn btn-accent"
-            >
-              Add
-            </Link>
-            <Link
-              href={`Home/Bulk?table=${xdd}`}
-              passHref
-              className="btn btn-warning"
-            >
-              Bulk
-            </Link>
           </div>
         </div>
       );
@@ -47,9 +33,9 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="m-10">
-      <h1 className="font-bold text-2xl ">Data Entries</h1>
-      <div className="my-10 flex gap-10 font-raleway flex-wrap">{Tables()}</div>
+    <div className="py-10 pl-10">
+      <h1 className="font-bold text-3xl ml-2 font-poppins mb-8">Data Tables</h1>
+      <div className="flex gap-10 font-raleway flex-wrap">{Tables()}</div>
     </div>
   );
 };

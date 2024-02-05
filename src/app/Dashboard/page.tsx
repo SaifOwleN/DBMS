@@ -13,7 +13,7 @@ const Dashboard = () => {
 
   return (
     <div className="p-10">
-      <h1 className="text-2xl font-bold">Dashboard</h1>
+      <h1 className="font-bold text-3xl ml-2 font-poppins mb-8">Dashboard</h1>
       <div className="flex gap-4">
         <div className="stats  bg-secondary text-secondary-content shadow">
           <div className="stat">

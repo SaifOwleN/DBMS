@@ -13,7 +13,7 @@ const Header = ({
   setSearch: Function;
 }) => {
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between items-center">
       <h1 className="text-3xl text-slate-600 font-bold font-poppins">
         {route}
       </h1>

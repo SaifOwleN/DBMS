@@ -9,10 +9,10 @@ import {
   LuHome,
   LuLayoutDashboard,
   LuLayoutTemplate,
+  LuLogOut,
   LuPanelLeftOpen,
   LuPanelRightClose,
 } from "react-icons/lu";
-import { MdDashboard, MdHome } from "react-icons/md";
 const NavBar = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isOpened, setIsOpened] = useState<boolean>(false);
@@ -59,52 +59,60 @@ const NavBar = () => {
               <label className="text-gray-500 text-xs font-normal">
                 Welcome Back
               </label>
-              <h2 className="text-lg">{user.name}</h2>
+              <h2 className="text-lg text-black">{user.name}</h2>
             </div>
           ) : null}
         </div>
       );
+    } else if (!user) {
+      return (
+        <a href={"/login"}>
+          <div className="avatar">
+            <div className="rounded-full w-12">
+              <img src="https://shorturl.at/qzEQ2" />
+            </div>
+          </div>
+        </a>
+      );
     }
-    return (
-      <Link href={"/login"} className="btn btn-primary">
-        Sign In
-      </Link>
-    );
   };
 
   return isOpened ? (
-    <div className="flex-shrink-0 flex-grow-0 navbar w-[218px] flex flex-col h-full items-start justify-between p-5 bg-gray-100">
+    <div className="flex-shrink-0 flex-grow-0 navbar w-[218px] flex flex-col min-h-full items-start justify-between p-5 bg-gray-100">
       <div className="flex flex-col items-start">
         <div className="flex gap-4 mb-12">{ifLogged()}</div>
-        <div className="flex flex-col gap-4 text-black w-[180px]">
-          <Link
-            href={"/Dashboard"}
-            id="Dashboard"
-            className={`navBtn ${active === "Dashboard" ? "bg-white" : null}`}
-          >
-            <LuLayoutDashboard />
-            <span className="navSpan">Dashboard</span>
-          </Link>
+        <div className="flex flex-col gap-4 text-gray-400 w-[180px]">
           <Link
             id="Home"
-            className={`navBtn ${active === "Home" ? "bg-white" : null}`}
+            className={`navBtn ${active === "Home" ? "text-black" : null}`}
             href={"/Home"}
           >
             <LuHome />
             <span className="navSpan">Home</span>
           </Link>
 
+          <Link
+            href={"/Dashboard"}
+            id="Dashboard"
+            className={`navBtn ${active === "Dashboard" ? "text-black" : null}`}
+          >
+            <LuLayoutDashboard />
+            <span className="navSpan">Dashboard</span>
+          </Link>
           <button className="navBtn">
             <LuLayoutTemplate /> <span className="navSpan">Schema</span>
           </button>
-          <button className="navBtn" onClick={() => setIsOpened(!isOpened)}>
+          <button
+            className="navBtn text-[#AB3781]"
+            onClick={() => setIsOpened(!isOpened)}
+          >
             {isOpened ? <LuPanelLeftOpen /> : <LuPanelRightClose />}
           </button>
         </div>
       </div>
       {user ? (
         <button className="navBtn" onClick={HandleSignOut}>
-          <IoIosExit />
+          <LuLogOut />
           <span className="navSpan">Logout</span>
         </button>
       ) : null}
@@ -115,25 +123,24 @@ const NavBar = () => {
         <div className="flex gap-4 mb-12">{ifLogged()}</div>
         <div className="flex flex-col items-center w-11 gap-4 text-gray-400 h-[240px] ">
           <Link
-            href="/Dashboard"
-            id="Dashboard"
-            className={`navBtnClosed ${active === "Dashboard" ? "text-black" : null}`}
-          >
-            <LuLayoutDashboard />
-          </Link>
-          <Link
             id="Home"
             className={`navBtnClosed ${active === "Home" ? "text-black" : null}`}
             href={"/Home"}
           >
             <LuHome />
           </Link>
-
+          <Link
+            href="/Dashboard"
+            id="Dashboard"
+            className={`navBtnClosed ${active === "Dashboard" ? "text-black" : null}`}
+          >
+            <LuLayoutDashboard />
+          </Link>
           <button className="navBtnClosed">
             <LuLayoutTemplate />
           </button>
           <button
-            className="navBtnClosed"
+            className="navBtnClosed text-[#AB3781]"
             onClick={() => setIsOpened(!isOpened)}
           >
             {isOpened ? <LuPanelLeftOpen /> : <LuPanelRightClose />}
@@ -142,7 +149,7 @@ const NavBar = () => {
       </div>
       {user ? (
         <button className="navBtnClosed" onClick={HandleSignOut}>
-          <IoIosExit />
+          <LuLogOut />
         </button>
       ) : null}
     </div>

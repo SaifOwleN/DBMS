@@ -32,7 +32,9 @@ interface Employee {
 export interface TableDefinition {
   name: string;
   type: string;
-  allowNull: boolean;
+  max: number | string;
+  required: boolean;
+  primaryKey: boolean;
 }
 export interface Tables {
   [key: string]: TableDefinition[];
