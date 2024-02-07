@@ -35,6 +35,7 @@ const Schema = () => {
   }, [route]);
 
   const showSchema = () => {
+    console.log("schema", schema);
     return schema?.map((attr) => (
       <tr key={attr.name}>
         <td>

@@ -51,7 +51,7 @@ const NavBar = () => {
         <div className="flex items-center">
           <div className="avatar">
             <div className="rounded-full w-12">
-              <img src="https://shorturl.at/qzEQ2" />
+              <img src="/avatar.png" />
             </div>
           </div>
           {isOpened ? (

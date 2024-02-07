@@ -206,6 +206,9 @@ const Entries = () => {
         <div className="mb-8 ml-2">
           <Header search={search} setSearch={setSearch} route={route} />
         </div>
+        <h1 className="text-xl font-bold p-2">
+          {data.length} {route} Found
+        </h1>
         <table
           className={`table table-zebra ${
             !data || data.length !== 0 ? "block" : "hidden"
